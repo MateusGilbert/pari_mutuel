@@ -4,7 +4,7 @@ import re
 import numpy as np
 
 class Bookmaker:
-	def __init__(self, init_prob, to_probs, label='Horse', against=True, st_budget=2520, tol=1):
+	def __init__(self, init_prob, to_probs, label='Horse', against=True, st_budget=5040, tol=1):
 		self.__tol = 10**tol
 		odds = list()
 		for p in init_prob:
@@ -120,3 +120,11 @@ class Bookmaker:
 		self.__money.append(self.__money[-1] + bet)
 		self.__money[-2] = bet
 		self.__update_odds()
+
+if __name__ == '__main__':
+	prob = [.3, .1, .2, .1, .3]
+	odds_to_prob = lambda x,y: x/(x + y)
+	bookmaker = Bookmaker(prob, odds_to_prob)
+	bookmaker.print_odds()
+	bookmaker.place_bets({'a': [0., 0., 0., 1000., 0.]})
+	bookmaker.print_odds()
